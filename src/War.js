@@ -14,7 +14,7 @@ const [kingArmyInput, setKingArmy] = useState(
     "Militia#10;Spearmen#10;FootArcher#1000;LightCavalry#120;CavalryArcher#100"
   );
     const [warStatus, setWarStatus] = useState(false);
-  const [result, setResult] = useState("\u00A0");
+  const [result, setResult] = useState("");
   const [details, setDetails] = useState([]);
 
   const advantage = {
@@ -102,7 +102,7 @@ const startWar = () => {
     }
 
     setWarStatus(true);
-    setResult("Calculating best strategy..."); 
+    setResult("War begin..."); 
 setDetails([]);
     // I just added below Delay to display war gif image
     setTimeout(() => {
@@ -111,9 +111,9 @@ setDetails([]);
         setWarStatus(false);
         if (outcome) {
           const output = outcome.arrangement
-            .map((p) => `${p.clazz}#${p.count}`)
+            .map((p) => `${p.clazz}-${p.count}`)
             .join(";");
-          setResult(output);
+          setResult("War Summary");
           setDetails(outcome.roundDetails);
         } else {
           setResult("There is no chance of winning");
@@ -158,6 +158,10 @@ setDetails([]);
                 Start War
               </Button>
             </div>}
+            {result.length >0 &&
+            <div>
+        <p className='result'>{result}</p>
+      </div>}
             {details.length > 0 && (
         <table className="w-full text-sm border-t resultTable">
           <thead>
